@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movie History — aktyorlar, kinolar va seriallar filmografiyasi</title>
+<meta name="description" id="metaDesc" content="Movie History: aktyor ismini yozing va uning rasmi, tarjimai holi hamda u o‘ynagan barcha kino va seriallarni bir joyda ko‘ring.">
+<meta name="keywords" content="Movie History, aktyor qidiruvi, aktyorlar, filmografiya, kinolar, seriallar, aktyor o‘ynagan kinolar, aktyor tarjimai holi, поиск актёров, актёры, фильмография, фильмы, сериалы, фильмы с актёром, биография актёра, actor search, actors, filmography, movies, TV series, movies by actor, actor biography, cast">
+<meta name="robots" content="index, follow">
+<meta name="application-name" content="Movie History">
+<meta name="theme-color" content="#2f4bff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Movie History">
+<meta property="og:title" id="ogTitle" content="Movie History — aktyorlar, kinolar va seriallar filmografiyasi">
+<meta property="og:description" id="ogDesc" content="Movie History: aktyor ismini yozing va uning rasmi, tarjimai holi hamda u o‘ynagan barcha kino va seriallarni bir joyda ko‘ring.">
+<meta property="og:locale" content="uz_UZ">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%232f4bff'/%3E%3Cpath fill='%23fff' d='M11 28V12h3.6l5.4 9 5.4-9H29v16h-3.6V18.6L21.2 26h-2.4l-4.2-7.4V28z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e8ebf2;--ink:#14172b;--mut:#5b6078;--card:#f5f6fa;--acc:#2f4bff;--line:#c9cedd}
+@media (prefers-color-scheme:dark){:root{--bg:#10121f;--ink:#eceefa;--mut:#9aa0bb;--card:#191c2e;--acc:#7f93ff;--line:#2a2f48}}
+*{box-sizing:border-box;margin:0}
+body{font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;letter-spacing:-.02em;color:inherit;text-decoration:none;cursor:pointer;border-radius:99px}
+.logo svg{width:40px;height:40px;flex:none;display:block}
+.logo svg circle{fill:var(--acc)}
+.tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.langs{display:flex;border:1px solid var(--line);border-radius:99px;padding:2px}
+.langs button{background:none;border:0;color:var(--mut);border-radius:99px;padding:5px 11px;font:inherit;font-size:.82rem;font-weight:600;cursor:pointer}
+.langs button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.keybtn{background:none;border:1px solid var(--line);color:var(--mut);border-radius:99px;padding:6px 14px;font:inherit;font-size:.85rem;cursor:pointer}
+h1{font-size:clamp(2.4rem,7vw,4.6rem);line-height:1;letter-spacing:-.035em;font-weight:800;margin:56px 0 24px;max-width:12ch}
+form{display:flex;gap:10px;max-width:640px}
+input[type=search],input[type=text]{flex:1;min-width:0;font:inherit;font-size:1.1rem;padding:15px 18px;border-radius:12px;border:2px solid var(--ink);background:var(--card);color:var(--ink)}
+button.go{font:inherit;font-weight:600;padding:0 24px;border-radius:12px;border:0;background:var(--acc);color:#fff;cursor:pointer}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.msg{margin-top:28px;color:var(--mut);max-width:60ch}
+.msg.err{color:#c62828}
+.picks{display:flex;gap:8px;flex-wrap:wrap;margin-top:28px}
+.pick{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:4px 14px 4px 4px;font:inherit;font-size:.9rem;cursor:pointer}
+.pick[aria-pressed=true]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.pick img,.pick i{width:30px;height:30px;border-radius:50%;object-fit:cover;background:var(--line)}
+.profile{display:grid;grid-template-columns:230px 1fr;gap:36px;margin-top:40px;align-items:start}
+.strip{position:relative;background:var(--ink);padding:14px 20px}
+.strip::before,.strip::after{content:"";position:absolute;top:0;bottom:0;width:8px;left:6px;background:repeating-linear-gradient(to bottom,transparent 0 6px,var(--bg) 6px 14px,transparent 14px 20px)}
+.strip::after{left:auto;right:6px}
+.strip img,.strip .none{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;background:var(--line)}
+.none{display:grid;place-items:center;color:var(--mut);font-size:.9rem}
+.name{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-.03em;line-height:1.05;font-weight:800}
+.facts{display:flex;flex-wrap:wrap;gap:6px 22px;margin:12px 0;color:var(--mut);font-size:.95rem}
+.facts b{color:var(--ink);font-weight:600}
+.bio{max-width:64ch;color:var(--ink);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.bio.open{display:block}
+.more{background:none;border:0;color:var(--acc);font:inherit;cursor:pointer;padding:6px 0}
+.bar{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:48px 0 16px;border-bottom:2px solid var(--ink);padding-bottom:10px;flex-wrap:wrap}
+.bar h2{font-size:1.5rem;letter-spacing:-.02em}
+.tabs{display:flex;gap:6px}
+.tabs button{font:inherit;font-size:.9rem;padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px 16px}
+.film .p{aspect-ratio:2/3;background:var(--line);overflow:hidden;border-radius:4px}
+.film img{width:100%;height:100%;object-fit:cover;display:block}
+.film .p.none{padding:10px;text-align:center}
+.film h3{font-size:.95rem;font-weight:600;margin-top:8px;line-height:1.25}
+.film small{display:block;color:var(--mut);font-size:.82rem}
+dialog{border:2px solid var(--ink);border-radius:16px;padding:24px;background:var(--bg);color:var(--ink);max-width:440px;width:calc(100% - 32px);margin:auto}
+dialog::backdrop{background:rgba(10,12,25,.55)}
+dialog p{margin:8px 0 16px;color:var(--mut);font-size:.95rem}
+dialog a{color:var(--acc)}
+dialog .row{display:flex;gap:10px;margin-top:14px}
+@media (max-width:700px){.profile{grid-template-columns:1fr}.strip{max-width:220px}}
+@media (max-width:480px){form#f{flex-direction:column}button.go{padding:14px 24px}}
+@media (prefers-reduced-motion:no-preference){.profile{animation:in .35s ease-out}@keyframes in{from{opacity:0}to{opacity:1}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" id="home" href="#">
+      <svg viewBox="0 0 40 40" role="img" aria-label="Movie History logo"><circle cx="20" cy="20" r="20"/><path fill="#fff" d="M11 28V12h3.6l5.4 9 5.4-9H29v16h-3.6V18.6L21.2 26h-2.4l-4.2-7.4V28z"/></svg>
+      Movie History
+    </a>
+    <div class="tools">
+      <div class="langs" id="langs" role="group" aria-label="Til / Язык / Language">
+        <button type="button" data-lang="uz" aria-pressed="true" title="O‘zbekcha">UZ</button>
+        <button type="button" data-lang="ru" aria-pressed="false" title="Русский">RU</button>
+        <button type="button" data-lang="en" aria-pressed="false" title="English">EN</button>
+      </div>
+      <button class="keybtn" id="keyBtn" type="button" data-i18n="keyBtn">API kalit</button>
+    </div>
+  </header>
+  <h1 data-i18n="h1">Aktyor ismini yozing</h1>
+  <form id="f" role="search">
+    <input type="search" id="q" placeholder="Masalan: Leonardo DiCaprio" autocomplete="off" aria-label="Aktyor ismi" required>
+    <button class="go" type="submit" data-i18n="search">Qidirish</button>
+  </form>
+  <div id="msg" class="msg" aria-live="polite">Rasmi, to‘liq ismi va u o‘ynagan barcha kino va seriallar bir joyda chiqadi.</div>
+  <div id="picks" class="picks"></div>
+  <main id="out"></main>
+</div>
+
+<dialog id="dlg">
+  <form id="kf" style="display:block;max-width:none">
+    <h2 data-i18n="keyTitle">TMDB API kalit</h2>
+    <p><span data-i18n="keyText1">Ma’lumotlar bepul TMDB bazasidan olinadi. Kalitni</span> <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org/settings/api</a> <span data-i18n="keyText2">sahifasidan oling va “API Key (v3 auth)” qiymatini shu yerga qo‘ying. Kalit faqat shu brauzerda saqlanadi.</span></p>
+    <input type="text" id="kin" placeholder="32 belgili kalit" aria-label="API kalit">
+    <p id="kerr" style="color:#c62828;margin:10px 0 0" aria-live="polite"></p>
+    <div class="row"><button class="go" style="padding:12px 24px" value="ok" data-i18n="save">Saqlash</button></div>
+  </form>
+</dialog>
+
+<script>
+const IMG = "https://image.tmdb.org/t/p/";
+const $ = id => document.getElementById(id);
+
+/* ---------- Tillar / Языки / Languages ---------- */
+const I18N = {
+  uz: {
+    locale: "uz-UZ", api: "en-US",
+    title: "Movie History — aktyorlar, kinolar va seriallar filmografiyasi",
+    desc: "Movie History: aktyor ismini yozing va uning rasmi, tarjimai holi hamda u o‘ynagan barcha kino va seriallarni bir joyda ko‘ring.",
+    h1: "Aktyor ismini yozing", ph: "Masalan: Leonardo DiCaprio", qLabel: "Aktyor ismi", search: "Qidirish",
+    intro: "Rasmi, to‘liq ismi va u o‘ynagan barcha kino va seriallar bir joyda chiqadi.",
+    keyBtn: "API kalit", keyTitle: "TMDB API kalit",
+    keyText1: "Ma’lumotlar bepul TMDB bazasidan olinadi. Kalitni",
+    keyText2: "sahifasidan oling va “API Key (v3 auth)” qiymatini shu yerga qo‘ying. Kalit faqat shu brauzerda saqlanadi.",
+    keyPh: "32 belgili kalit", save: "Saqlash",
+    errLong: "Bu uzun token. Sahifa pastidagi 32 belgili “API Key” kerak.",
+    errLen: "Kalit 32 belgidan iborat bo‘lishi kerak. Hozir: {0} ta belgi.",
+    keySaved: "Kalit saqlandi. Endi aktyor ismini yozib qidiring.",
+    needKey: "Avval API kalitni kiriting.",
+    start: "Boshlash uchun yuqoridagi “API kalit” tugmasi orqali bepul TMDB kalitini kiriting.",
+    searching: "Qidirilmoqda…",
+    notFound: "“{0}” bo‘yicha hech kim topilmadi. Ismni inglizcha yozib ko‘ring.",
+    badKey: "API kalit noto‘g‘ri. Uni qayta kiriting.",
+    netErr: "TMDB bilan ulanishda xato ({0}). Internet yoki VPN’ni tekshirib, qayta urinib ko‘ring.",
+    loadErr: "Ma’lumotni yuklab bo‘lmadi.",
+    born: "Tug‘ilgan: ", died: "Vafot etgan: ", place: "Joyi: ", roles: "Roli: ", roleCount: "{0} ta",
+    aka: "Boshqa nomlari: ", more: "Ko‘proq o‘qish", less: "Yopish", noPhoto: "Rasm yo‘q", portrait: "{0} portreti",
+    filmography: "Filmografiya", all: "Hammasi", movie: "Kino", tv: "Serial",
+    empty: "Bu bo‘limda hech narsa topilmadi."
+  },
+  ru: {
+    locale: "ru-RU", api: "ru-RU",
+    title: "Movie History — фильмография актёров: фильмы и сериалы",
+    desc: "Movie History: введите имя актёра и получите его фото, биографию и все фильмы и сериалы, в которых он снимался, на одной странице.",
+    h1: "Введите имя актёра", ph: "Например: Leonardo DiCaprio", qLabel: "Имя актёра", search: "Найти",
+    intro: "Фото, полное имя и все фильмы и сериалы актёра появятся на одной странице.",
+    keyBtn: "API-ключ", keyTitle: "API-ключ TMDB",
+    keyText1: "Данные берутся из бесплатной базы TMDB. Получите ключ на странице",
+    keyText2: "и вставьте сюда значение «API Key (v3 auth)». Ключ хранится только в этом браузере.",
+    keyPh: "Ключ из 32 символов", save: "Сохранить",
+    errLong: "Это длинный токен. Нужен «API Key» из 32 символов внизу страницы.",
+    errLen: "Ключ должен состоять из 32 символов. Сейчас: {0}.",
+    keySaved: "Ключ сохранён. Теперь введите имя актёра и начните поиск.",
+    needKey: "Сначала введите API-ключ.",
+    start: "Чтобы начать, введите бесплатный ключ TMDB через кнопку «API-ключ» вверху.",
+    searching: "Идёт поиск…",
+    notFound: "По запросу «{0}» никто не найден. Попробуйте написать имя по-английски.",
+    badKey: "Неверный API-ключ. Введите его заново.",
+    netErr: "Ошибка соединения с TMDB ({0}). Проверьте интернет или VPN и попробуйте ещё раз.",
+    loadErr: "Не удалось загрузить данные.",
+    born: "Дата рождения: ", died: "Дата смерти: ", place: "Место: ", roles: "Ролей: ", roleCount: "{0}",
+    aka: "Другие имена: ", more: "Читать дальше", less: "Свернуть", noPhoto: "Нет фото", portrait: "Портрет: {0}",
+    filmography: "Фильмография", all: "Все", movie: "Фильм", tv: "Сериал",
+    empty: "В этом разделе ничего не найдено."
+  },
+  en: {
+    locale: "en-US", api: "en-US",
+    title: "Movie History — actor filmographies: movies and TV series",
+    desc: "Movie History: type an actor's name to see their photo, biography and every movie and TV series they have appeared in, all in one place.",
+    h1: "Type an actor's name", ph: "For example: Leonardo DiCaprio", qLabel: "Actor's name", search: "Search",
+    intro: "The photo, full name and every movie and TV series the actor appeared in, all in one place.",
+    keyBtn: "API key", keyTitle: "TMDB API key",
+    keyText1: "Data comes from the free TMDB database. Get a key at",
+    keyText2: "and paste the “API Key (v3 auth)” value here. The key is stored only in this browser.",
+    keyPh: "32-character key", save: "Save",
+    errLong: "This is the long token. You need the 32-character “API Key” lower on that page.",
+    errLen: "The key must be 32 characters long. Now: {0}.",
+    keySaved: "Key saved. Now type an actor's name and search.",
+    needKey: "Enter the API key first.",
+    start: "To begin, enter a free TMDB key with the “API key” button above.",
+    searching: "Searching…",
+    notFound: "Nobody found for “{0}”. Try a different spelling.",
+    badKey: "The API key is not valid. Enter it again.",
+    netErr: "Could not connect to TMDB ({0}). Check your internet or VPN and try again.",
+    loadErr: "Could not load the data.",
+    born: "Born: ", died: "Died: ", place: "Place: ", roles: "Roles: ", roleCount: "{0}",
+    aka: "Also known as: ", more: "Read more", less: "Show less", noPhoto: "No photo", portrait: "Portrait of {0}",
+    filmography: "Filmography", all: "All", movie: "Movie", tv: "TV series",
+    empty: "Nothing found in this section."
+  }
+};
+
+let KEY = "", LANG = "uz";
+try {
+  KEY = localStorage.getItem("kadr_key") || "";
+  const saved = localStorage.getItem("mh_lang");
+  const nav = (navigator.language || "").slice(0, 2).toLowerCase();
+  LANG = I18N[saved] ? saved : (I18N[nav] ? nav : "uz");
+} catch (e) {}
+
+function t(key, arg) {
+  const s = I18N[LANG][key];
+  return arg === undefined ? s : s.replace("{0}", arg);
+}
+
+let lastMsg = [KEY ? "intro" : "start", false, undefined];
+let currentId = null;
+let keyErr = null;
+
+function say(key, err, arg) {
+  lastMsg = [key, !!err, arg];
+  const m = $("msg");
+  m.textContent = key ? t(key, arg) : "";
+  m.className = "msg" + (err ? " err" : "");
+}
+
+function applyLang() {
+  document.documentElement.lang = LANG;
+  document.title = t("title");
+  $("metaDesc").setAttribute("content", t("desc"));
+  $("ogTitle").setAttribute("content", t("title"));
+  $("ogDesc").setAttribute("content", t("desc"));
+  document.querySelectorAll("[data-i18n]").forEach(n => { n.textContent = t(n.dataset.i18n); });
+  $("q").placeholder = t("ph");
+  $("q").setAttribute("aria-label", t("qLabel"));
+  $("kin").placeholder = t("keyPh");
+  $("kin").setAttribute("aria-label", t("keyBtn"));
+  $("kerr").textContent = keyErr ? t(keyErr[0], keyErr[1]) : "";
+  document.querySelectorAll("#langs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === LANG)));
+  say(lastMsg[0], lastMsg[1], lastMsg[2]);
+}
+
+document.querySelectorAll("#langs button").forEach(b => {
+  b.onclick = () => {
+    if (b.dataset.lang === LANG) return;
+    LANG = b.dataset.lang;
+    try { localStorage.setItem("mh_lang", LANG); } catch (e) {}
+    applyLang();
+    if (currentId) loadPerson(currentId);
+  };
+});
+
+/* ---------- Bosh sahifaga qaytish ---------- */
+$("home").onclick = e => {
+  e.preventDefault();
+  currentId = null;
+  $("q").value = "";
+  $("picks").replaceChildren();
+  $("out").replaceChildren();
+  say(KEY ? "intro" : "start");
+  window.scrollTo({ top: 0 });
+  $("q").focus();
+};
+
+/* ---------- Yordamchi funksiyalar ---------- */
+function el(tag, props, ...kids) {
+  const n = document.createElement(tag);
+  if (props) for (const k in props) {
+    if (k === "class") n.className = props[k];
+    else if (k === "text") n.textContent = props[k];
+    else n.setAttribute(k, props[k]);
+  }
+  kids.flat().forEach(c => c && n.append(c));
+  return n;
+}
+
+async function api(path, params, lang) {
+  const u = new URL("https://api.themoviedb.org/3" + path);
+  u.searchParams.set("api_key", KEY);
+  u.searchParams.set("language", lang || I18N[LANG].api);
+  for (const k in params || {}) u.searchParams.set(k, params[k]);
+  const r = await fetch(u);
+  if (r.status === 401) throw new Error("key");
+  if (!r.ok) throw new Error("net");
+  return r.json();
+}
+
+/* ---------- API kalit ---------- */
+function askKey() {
+  $("kin").value = KEY;
+  $("dlg").showModal();
+}
+$("keyBtn").onclick = askKey;
+$("kf").addEventListener("submit", e => {
+  e.preventDefault();
+  const v = $("kin").value.trim();
+  const err = $("kerr");
+  if (v.startsWith("eyJ") || v.length > 40) { keyErr = ["errLong"]; err.textContent = t("errLong"); return; }
+  if (v.length !== 32) { keyErr = ["errLen", v.length]; err.textContent = t("errLen", v.length); return; }
+  KEY = v;
+  try { localStorage.setItem("kadr_key", KEY); } catch (x) {}
+  keyErr = null;
+  err.textContent = "";
+  $("dlg").close();
+  say("keySaved");
+});
+
+/* ---------- Qidiruv ---------- */
+$("f").onsubmit = async e => {
+  e.preventDefault();
+  const q = $("q").value.trim();
+  if (!q) return;
+  if (!KEY) { say("needKey", true); askKey(); return; }
+  $("out").replaceChildren(); $("picks").replaceChildren();
+  currentId = null;
+  say("searching");
+  try {
+    const d = await api("/search/person", { query: q });
+    const people = d.results.filter(p => p.known_for_department === "Acting");
+    const list = people.length ? people : d.results;
+    if (!list.length) { say("notFound", true, q); return; }
+    say("");
+    showPicks(list.slice(0, 6));
+    loadPerson(list[0].id);
+  } catch (err) {
+    if (err.message === "key") say("badKey", true);
+    else say("netErr", true, err.message);
+  }
+};
+
+function showPicks(list) {
+  const box = $("picks");
+  if (list.length < 2) return;
+  list.forEach((p, i) => {
+    const th = p.profile_path ? el("img", { src: IMG + "w92" + p.profile_path, alt: "" }) : el("i");
+    const b = el("button", { class: "pick", type: "button", "aria-pressed": i === 0 }, th, p.name);
+    b.onclick = () => {
+      box.querySelectorAll(".pick").forEach(x => x.setAttribute("aria-pressed", "false"));
+      b.setAttribute("aria-pressed", "true");
+      loadPerson(p.id);
+    };
+    box.append(b);
+  });
+}
+
+async function loadPerson(id) {
+  currentId = id;
+  const lang = LANG;
+  try {
+    const p = await api("/person/" + id, { append_to_response: "combined_credits" });
+    // Tarjimai hol tanlangan tilda bo‘lmasa, inglizchasini olamiz
+    if (!p.biography && I18N[lang].api !== "en-US") {
+      try { p.biography = (await api("/person/" + id, null, "en-US")).biography; } catch (x) {}
+    }
+    if (currentId !== id || LANG !== lang) return; // foydalanuvchi boshqasini tanlab ulgurdi
+    if (lastMsg[0] === "loadErr") say("");
+    render(p);
+  } catch (err) { say("loadErr", true); }
+}
+
+function fmtDate(s) {
+  if (!s) return "";
+  return new Date(s + "T00:00:00").toLocaleDateString(I18N[LANG].locale, { year: "numeric", month: "long", day: "numeric" });
+}
+
+function render(p) {
+  const out = $("out");
+  const seen = new Map();
+  (p.combined_credits.cast || []).forEach(c => {
+    if ((c.genre_ids || []).some(g => g === 10767 || g === 10763)) return;
+    if (/self|himself|herself|в роли самого себя|играет себя|камео/i.test(c.character || "")) return;
+    const k = c.media_type + c.id;
+    if (!seen.has(k)) seen.set(k, c);
+  });
+  const films = [...seen.values()].sort((a, b) => {
+    const da = a.release_date || a.first_air_date || "", db = b.release_date || b.first_air_date || "";
+    return (db || "0").localeCompare(da || "0");
+  });
+
+  const photo = p.profile_path
+    ? el("img", { src: IMG + "w500" + p.profile_path, alt: t("portrait", p.name) })
+    : el("div", { class: "none", text: t("noPhoto") });
+
+  const facts = el("div", { class: "facts" });
+  if (p.birthday) facts.append(el("span", null, t("born"), el("b", { text: fmtDate(p.birthday) })));
+  if (p.deathday) facts.append(el("span", null, t("died"), el("b", { text: fmtDate(p.deathday) })));
+  if (p.place_of_birth) facts.append(el("span", null, t("place"), el("b", { text: p.place_of_birth })));
+  facts.append(el("span", null, t("roles"), el("b", { text: t("roleCount", films.length) })));
+
+  const info = el("div", null, el("h2", { class: "name", text: p.name }), facts);
+  if (p.also_known_as && p.also_known_as.length) {
+    info.append(el("div", { class: "facts", text: t("aka") + p.also_known_as.slice(0, 3).join(", ") }));
+  }
+  if (p.biography) {
+    const bio = el("p", { class: "bio", text: p.biography });
+    const more = el("button", { class: "more", type: "button", text: t("more") });
+    more.onclick = () => { const o = bio.classList.toggle("open"); more.textContent = o ? t("less") : t("more"); };
+    info.append(bio, more);
+  }
+
+  const grid = el("div", { class: "grid" });
+  const tabs = el("div", { class: "tabs" });
+  let mode = "all";
+  const draw = () => {
+    grid.replaceChildren();
+    films.filter(f => mode === "all" || f.media_type === mode).forEach(f => {
+      const title = f.title || f.name;
+      const yr = (f.release_date || f.first_air_date || "").slice(0, 4) || "—";
+      const poster = f.poster_path
+        ? el("img", { src: IMG + "w342" + f.poster_path, alt: title, loading: "lazy" })
+        : el("span", { text: title });
+      const meta = (f.media_type === "tv" ? t("tv") : t("movie")) + ", " + yr;
+      grid.append(el("article", { class: "film" },
+        el("div", { class: "p" + (f.poster_path ? "" : " none") }, poster),
+        el("h3", { text: title }),
+        el("small", { text: meta }),
+        f.character ? el("small", { text: f.character }) : null));
+    });
+    if (!grid.children.length) grid.append(el("p", { class: "msg", text: t("empty") }));
+  };
+  [["all", t("all")], ["movie", t("movie")], ["tv", t("tv")]].forEach(([m, label]) => {
+    const b = el("button", { type: "button", "aria-pressed": m === "all", text: label });
+    b.onclick = () => {
+      mode = m;
+      tabs.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", "false"));
+      b.setAttribute("aria-pressed", "true");
+      draw();
+    };
+    tabs.append(b);
+  });
+  draw();
+
+  out.replaceChildren(
+    el("section", { class: "profile" }, el("div", { class: "strip" }, photo), info),
+    el("div", { class: "bar" }, el("h2", { text: t("filmography") }), tabs),
+    grid
+  );
+}
+
+applyLang();
+</script>
+</body>
+</html>
